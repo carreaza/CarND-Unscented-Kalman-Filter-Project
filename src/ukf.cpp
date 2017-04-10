@@ -34,16 +34,16 @@ UKF::UKF() {
                 0, 1, 0, 0, 0;
 
     // Process noise standard deviation longitudinal acceleration in m/s^2
-    std_a_ = 0.6; //30;
+    std_a_ = 0.6;
 
     // Process noise standard deviation yaw acceleration in rad/s^2
-    std_yawdd_ = 1.2; //30;
+    std_yawdd_ = 1.2;
 
     // Laser measurement noise standard deviation position1 in m
-    std_laspx_ = 0.025; // 0.15;
+    std_laspx_ = 0.025;
 
     // Laser measurement noise standard deviation position2 in m
-    std_laspy_ = 0.025;//  0.15;
+    std_laspy_ = 0.025;
 
     // Radar measurement noise standard deviation radius in m
     std_radr_ = 0.3;
@@ -161,11 +161,6 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
      *  Update
      ****************************************************************************/
 
-    /**
-     TODO:
-       * Use the sensor type to perform the update step.
-     */
-
     if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
         // Radar updates
         UpdateRadar(meas_package);
@@ -185,12 +180,6 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
  * measurement and this one.
  */
 void UKF::Prediction(double delta_t) {
-  /**
-  TODO:
-
-  Complete this function! Estimate the object's location. Modify the state
-  vector, x_. Predict sigma points, the state, and the state covariance matrix.
-  */
 
   //create augmented mean state
   x_aug_.head(5) = x_;
@@ -292,15 +281,6 @@ void UKF::Prediction(double delta_t) {
  * @param {MeasurementPackage} meas_package
  */
 void UKF::UpdateLidar(MeasurementPackage meas_package) {
-  /**
-  TODO:
-
-  Complete this function! Use lidar data to update the belief about the object's
-  position. Modify the state vector, x_, and covariance, P_.
-
-  You'll also need to calculate the lidar NIS.
-  */
-
     MatrixXd R_laser = MatrixXd(2,2);
     R_laser << std_laspx_, 0,
             0, std_laspy_;
@@ -332,14 +312,6 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
  * @param {MeasurementPackage} meas_package
  */
 void UKF::UpdateRadar(MeasurementPackage meas_package) {
-  /**
-  TODO:
-
-  Complete this function! Use radar data to update the belief about the object's
-  position. Modify the state vector, x_, and covariance, P_.
-
-  You'll also need to calculate the radar NIS.
-  */
 
   //transform sigma points into measurement space
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //2n+1 sigma points

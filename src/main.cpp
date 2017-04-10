@@ -97,6 +97,7 @@ int main(int argc, char* argv[]) {
       iss >> timestamp;
       meas_package.timestamp_ = timestamp;
       measurement_pack_list.push_back(meas_package);
+
     } else if (sensor_type.compare("R") == 0) {
       // radar measurement
 
@@ -113,6 +114,7 @@ int main(int argc, char* argv[]) {
       iss >> timestamp;
       meas_package.timestamp_ = timestamp;
       measurement_pack_list.push_back(meas_package);
+
     }
 
       // read ground truth data to compare later
@@ -158,6 +160,7 @@ int main(int argc, char* argv[]) {
 
   for (size_t k = 0; k < number_of_measurements; ++k) {
     // Call the UKF-based fusion
+    cout << measurement_pack_list[k].raw_measurements_ << endl;
     ukf.ProcessMeasurement(measurement_pack_list[k]);
 
     // output the estimation

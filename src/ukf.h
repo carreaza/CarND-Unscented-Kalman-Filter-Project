@@ -17,6 +17,9 @@ public:
   ///* initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
 
+  // previous timestamp
+  long previous_timestamp_;
+
   ///* if this is false, laser measurements will be ignored (except for init)
   bool use_laser_;
 
@@ -26,11 +29,19 @@ public:
   ///* state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   VectorXd x_;
 
+  VectorXd x_aug_;
+
   ///* state covariance matrix
   MatrixXd P_;
 
+  MatrixXd P_aug_;
+
   ///* predicted sigma points matrix
   MatrixXd Xsig_pred_;
+
+  MatrixXd Xsig_aug_;
+
+  MatrixXd Zsig_;
 
   ///* time when the state is true, in us
   long long time_us_;
@@ -62,8 +73,12 @@ public:
   ///* State dimension
   int n_x_;
 
+  MatrixXd H_laser_;
+
   ///* Augmented state dimension
   int n_aug_;
+
+  int n_z_;
 
   ///* Sigma point spreading parameter
   double lambda_;
